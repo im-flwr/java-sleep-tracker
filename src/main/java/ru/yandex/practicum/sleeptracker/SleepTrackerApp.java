@@ -38,6 +38,6 @@ public class SleepTrackerApp {
 
     private static SleepingSession parseSession(String line) {
         String[] parts = line.trim().split(";");
-        return new SleepingSession(LocalDateTime.parse(parts[0],FORMATTER), LocalDateTime.parse(parts[1], FORMATTER), SleepQuality.valueOf(parts[2].trim()));
+        return new SleepingSession(LocalDateTime.parse(parts[0], FORMATTER), LocalDateTime.parse(parts[1], FORMATTER), SleepQuality.valueOf(parts[2].trim()));
     }
 }

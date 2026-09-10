@@ -4,7 +4,9 @@ public enum Chronotype {
     OWL("сова"),
     LARK("жаворонок"),
     PIGEON("голубь");
+
     private final String title;
+
     Chronotype(String title) {
         this.title = title;
     }
