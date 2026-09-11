@@ -25,6 +25,9 @@ public class SleepTrackerApp {
             path = Path.of(args[0]);
         }
         List<SleepingSession> sessions = readSessions(path);
+        if (sessions.isEmpty()) {
+            return;
+        }
         FUNCTIONS.stream().map(function -> function.apply(sessions)).forEach(System.out::println);
     }
 

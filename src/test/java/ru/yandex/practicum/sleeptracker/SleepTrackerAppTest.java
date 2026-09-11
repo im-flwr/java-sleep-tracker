@@ -30,6 +30,34 @@ public class SleepTrackerAppTest {
         assertEquals(
                 Chronotype.PIGEON,
                 new ChronotypeFunction().apply(List.of(night, bad)).getValue());
+
+        SleepingSession owl = new SleepingSession(
+                LocalDateTime.of(2025, 10, 3, 23, 30),
+                LocalDateTime.of(2025, 10, 4, 10, 0),
+                SleepQuality.GOOD);
+        assertEquals(
+                Chronotype.OWL,
+                new ChronotypeFunction().apply(List.of(owl)).getValue());
+
+        SleepingSession lark = new SleepingSession(
+                LocalDateTime.of(2025, 10, 4, 21, 30),
+                LocalDateTime.of(2025, 10, 5, 6, 0),
+                SleepQuality.GOOD);
+        assertEquals(
+                Chronotype.LARK,
+                new ChronotypeFunction().apply(List.of(lark)).getValue());
+
+        SleepingSession pigeon = new SleepingSession(
+                LocalDateTime.of(2025, 10, 5, 22, 30),
+                LocalDateTime.of(2025, 10, 6, 7, 30),
+                SleepQuality.GOOD);
+        assertEquals(
+                Chronotype.PIGEON,
+                new ChronotypeFunction().apply(List.of(pigeon)).getValue());
+
+        assertEquals(
+                Chronotype.PIGEON,
+                new ChronotypeFunction().apply(List.of(owl, lark)).getValue());
     }
 
     @Test
