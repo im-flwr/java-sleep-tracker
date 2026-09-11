@@ -1,29 +1,39 @@
 package ru.yandex.practicum.sleeptracker;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
+import java.time.Period;
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.LongStream;
 
 public class SleeplessNightsFunction implements Function<List<SleepingSession>, SleepAnalysisResult> {
 
     @Override
     public SleepAnalysisResult apply(List<SleepingSession> sessions) {
-        if (sessions.isEmpty()) return new SleepAnalysisResult("Кол-во бессонных ночей", 0L);
+        if (sessions.isEmpty()) {
+            return new SleepAnalysisResult("Кол-во бессонных ночей", 0L);
+        }
+
         LocalDate first = sessions.stream()
                 .map(SleeplessNightsFunction::nightDate)
                 .min(LocalDate::compareTo)
                 .orElseThrow();
+
         LocalDate last = sessions.stream()
                 .map(SleeplessNightsFunction::nightDate)
                 .max(LocalDate::compareTo)
                 .orElseThrow();
-        long value = LongStream.rangeClosed(0, ChronoUnit.DAYS.between(first, last))
-                .mapToObj(first::plusDays)
-                .filter(date -> sessions.stream()
-                        .noneMatch(s -> nightDate(s).equals(date) && s.isNightSession()))
+
+        long totalNights = Period.between(first, last).getDays() + 1;
+
+        long sleptNights = sessions.stream()
+                .filter(SleepingSession::isNightSession)
+                .map(SleeplessNightsFunction::nightDate)
+                .distinct()
                 .count();
+
+        long value = totalNights - sleptNights;
+
         return new SleepAnalysisResult("Кол-во бессонных ночей", value);
     }
 

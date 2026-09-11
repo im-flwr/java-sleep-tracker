@@ -1,6 +1,7 @@
 package ru.yandex.practicum.sleeptracker;
 
 import java.time.LocalTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -15,10 +16,7 @@ public class ChronotypeFunction implements Function<List<SleepingSession>, Sleep
                 .map(this::classify)
                 .collect(Collectors.groupingBy(type -> type, Collectors.counting()));
 
-        long max = counts.values().stream()
-                .mapToLong(Long::longValue)
-                .max()
-                .orElse(0);
+        long max = counts.isEmpty() ? 0 : Collections.max(counts.values());
 
         long ties = counts.values().stream()
                 .filter(value -> value == max)

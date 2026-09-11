@@ -1,15 +1,19 @@
 package ru.yandex.practicum.sleeptracker;
 
 import org.junit.jupiter.api.Test;
+
 import java.time.LocalDateTime;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SleepTrackerAppTest {
+
     private final SleepingSession night = new SleepingSession(
             LocalDateTime.of(2025, 10, 1, 23, 0),
             LocalDateTime.of(2025, 10, 2, 7, 0),
             SleepQuality.GOOD);
+
     private final SleepingSession bad = new SleepingSession(
             LocalDateTime.of(2025, 10, 2, 23, 0),
             LocalDateTime.of(2025, 10, 3, 6, 0),
@@ -17,7 +21,7 @@ public class SleepTrackerAppTest {
 
     @Test
     void calculatesBasicMetrics() {
-        List<SleepingSession> sessions = List.of(night,bad);
+        List<SleepingSession> sessions = List.of(night, bad);
         assertEquals(2, new CountSleepingSessionsFunction().apply(sessions).getValue());
         assertEquals(420L, new MinSleepDurationFunction().apply(sessions).getValue());
         assertEquals(480L, new MaxSleepDurationFunction().apply(sessions).getValue());
